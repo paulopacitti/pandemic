@@ -1,1 +1,7 @@
+# build objects
 pandemic
+pandemic.hi
+pandemic.o
+
+# haskell experiments
+test.hs
