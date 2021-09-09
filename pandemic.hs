@@ -1,27 +1,23 @@
 module Main where
-import Data.Map
+import Data.Map ( empty, insertWith, Map )
+import Control.Monad ()
 
 type Graph = Map String [(String, Float)]
 
-main = do   
-    userInput <- getContents
-    mapM_ putStr userInput
+main = do
+    contents <- getContents
+    let graph = buildGraph (init (lines contents)) Data.Map.empty
+    let pacient0 = last (lines contents)
+    print graph -- print the graph
+    putStrLn ""
 
 
--- buildGraph :: (Graph, String) -> (Graph, String)
--- process graph string = do
---     line <- getLine
---     let args = words line in
---         if length args == 3
---             then (process (Data.Map.insertWith (\new old -> old ++ new) (head args) [(args!!1, args!!2)] (fst t)),"")
---             else (graph,head args)
+buildGraph :: [String] -> Graph -> Graph
+buildGraph [] graph  = graph
+buildGraph (x:xs) graph  = let args = words x
+                               key = head args
+                               value = [(args!!1, stringToFloat (args !! 2))] in
+        buildGraph xs (Data.Map.insertWith (++) key value graph)
 
-
--- buildGraph :: Graph -> [String] -> (Graph, String)
--- buildGraph graph args = if length args == 1 then
---         (graph, head args)
---     else do line <- getLine
---         let newGraph = Data.Map.insertWith (\new old -> old ++ new) (head args) [(args!!1, args!!2)] graph
---         return buildGraph graph (words line)
-
--- buildTuple graph start = (graph, start)
+stringToFloat :: String -> Float
+stringToFloat s = read s :: Float
