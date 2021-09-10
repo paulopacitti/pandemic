@@ -15,9 +15,10 @@ main = do
 buildGraph :: [String] -> Graph -> Graph
 buildGraph [] graph  = graph
 buildGraph (x:xs) graph  = let args = words x
-                               key = head args
-                               value = [(args!!1, stringToFloat (args !! 2))] in
-        buildGraph xs (Data.Map.insertWith (++) key value graph)
+                               v = head args
+                               u = args!!1
+                               weight = stringToFloat (args !! 2) in
+        buildGraph xs (Data.Map.insertWith (++) v [(u, weight)] (Data.Map.insertWith (++) u [(v, weight)] graph)) -- insert in both adjacency lists
 
 stringToFloat :: String -> Float
 stringToFloat s = read s :: Float
