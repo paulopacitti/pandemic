@@ -1,3 +1,6 @@
+-- 185447 - Paulo Barreira Pacitti
+-- 195216 - Caio Henrique Pardal
+
 module Main where
 
 import Data.List
@@ -92,4 +95,10 @@ main = do
     contents <- getContents
     let graph = buildGraph contents
     let pacient0 = last (lines contents)
+    let shortestPath = dijkstra graph pacient0
+    let shortestPathWeights = map (fst . snd) shortestPath
+    let weightsWithoutZeros = filter (/=0) shortestPathWeights
+    let timesToContaminateFromShortest = map (1/) weightsWithoutZeros
+    let timeToContaminateAllEdges = sum timesToContaminateFromShortest
+    printf "%.2f" timeToContaminateAllEdges :: IO ()
     putStrLn ""
