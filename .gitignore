@@ -5,3 +5,6 @@ pandemic.o
 
 # haskell experiments
 test.hs
+
+# vscode files
+.vscode
